@@ -2,6 +2,8 @@
 
 Авторизация в Deckhouse K8S dashboard
 
+**HINT** Не забывайте сменить переменные на верные в `values.yaml` и `secret-values.yaml`. Это домены, токены, пароли для доступа в Registry и к K8S dashboars
+
 ## Getting started
 
 Приложение поддерживает несколько пользователей. Пример создания юзера dashboard с root-правами
@@ -36,3 +38,4 @@ kubectl config use-context ${CONTEXT}-${CLUSTER}
 ```
 
 **HINT** WERF_SECRET_KEY 6920dee6b9cfdfd9084728038c3bae11
+

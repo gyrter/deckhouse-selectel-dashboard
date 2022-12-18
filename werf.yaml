@@ -1,0 +1,7 @@
+project: dashboard-auth
+configVersion: 1
+deploy:
+  namespace: "dashboard-auth"
+---
+image: nginx
+dockerfile: docker/nginx/Dockerfile

@@ -1,0 +1,12 @@
+{{- $tlsIssuer := pluck .Values.global.env .Values.ingress.tlsIssuer | first | default .Values.ingress.tlsIssuer._default -}}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include ".helm.fullname" . }}
+spec:
+  dnsNames:
+  - {{ regexSplit "/" (pluck .Values.global.env .Values.ingress.url | first | default .Values.ingress.url._default) -1 | last  }}
+  issuerRef:
+{{ toYaml $tlsIssuer | indent 4 }}
+  secretName: {{ pluck .Values.global.env .Values.ingress.tlsSecret | first | default .Values.ingress.tlsSecret._default }}

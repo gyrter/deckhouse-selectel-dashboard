@@ -1,0 +1,32 @@
+{{- $port := pluck .Values.global.env .Values.nginx.port | first | default .Values.nginx.port._default -}}
+{{- $chartName := include  ".helm.fullname" . -}}
+{{- $secretName :=  printf "%s-basic-auth" $chartName -}}
+---
+apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ include ".helm.fullname" . }}
+spec:
+  ingressClassName: {{ pluck .Values.global.env .Values.ingress.class | first | default .Values.ingress.class._default }}
+  rules:
+  - host: {{ regexSplit "/" (pluck .Values.global.env .Values.ingress.url | first | default .Values.ingress.url._default) -1 | last }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ pluck .Values.global.env .Values.nginx.service | first | default .Values.nginx.service._default }}
+            port:
+              number: {{ $port }}
+        path: /_tech/auth
+        pathType: Prefix
+      - backend:
+          service:
+            name: {{ pluck .Values.global.env .Values.nginx.service | first | default .Values.nginx.service._default }}
+            port:
+              number: {{ $port }}
+        path: /_tech/is_auth
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ regexSplit "/" (pluck .Values.global.env .Values.ingress.url | first | default .Values.ingress.url._default) -1 | last }}
+    secretName: {{ pluck .Values.global.env .Values.ingress.tlsSecret | first | default .Values.ingress.tlsSecret._default }}

@@ -34,3 +34,5 @@ kubectl config set-context ${CONTEXT}-${CLUSTER} \
   --cluster=${CONTEXT}-${CLUSTER} --user=${ACCOUNT_NAME}
 kubectl config use-context ${CONTEXT}-${CLUSTER}
 ```
+
+**HINT** WERF_SECRET_KEY 6920dee6b9cfdfd9084728038c3bae11
